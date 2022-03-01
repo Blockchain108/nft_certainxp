@@ -58,6 +58,10 @@ const config: HardhatUserConfig = {
         mnemonic: MNEMONIC,
       },
       chainId: chainIds.hardhat,
+      // throwOnTransactionFailures: true,
+      // throwOnCallFailures: true,
+      allowUnlimitedContractSize: true,
+      // blockGasLimit: 0x1fffffffffffff,
     },
     mainnet: createTestnetConfig("mainnet"),
     ropsten: createTestnetConfig("ropsten"),
@@ -70,7 +74,22 @@ const config: HardhatUserConfig = {
       {
         version: "0.6.6",
       },
+      {
+        version: "0.6.12",
+      },
+      {
+        version: "0.4.18",
+      },
+      {
+        version: "0.4.19",
+      },
     ],
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
   },
 };
 

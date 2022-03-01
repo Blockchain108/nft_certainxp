@@ -1361,7 +1361,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor (string memory name_, string memory symbol_) {
+    constructor (string memory name_, string memory symbol_) public {
         _name = name_;
         _symbol = symbol_;
 
@@ -2071,7 +2071,7 @@ contract ElementCrystals is ERC721 {
     mapping(string => bool) public tokenURIExists;
 
     // Initialize contract while deployment with contract's collection name and token
-    constructor(address usdc, IUniswapV2Router01 _sushiswap) ERC721("ElementCrystal", "ElementCry") {
+    constructor(address usdc, IUniswapV2Router01 _sushiswap) public ERC721("ElementCrystal", "ElementCry") {
         collectionName = name();
         collectionNameSymbol = symbol();
         usdcToken = IERC20(usdc);
