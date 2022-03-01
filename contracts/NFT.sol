@@ -2085,7 +2085,7 @@ contract ElementCrystals is ERC721 {
         require(!tokenURIExists[_tokenURI]);
         require(!tokenNameExists[_name]);
 
-        uint _price = __price.mul(1000000000000000000);
+        uint _price = __price.mul(1e18);
         uint realUsdcAmount = 0;
 
         if(tokenAddress == _tokenAddress) {
