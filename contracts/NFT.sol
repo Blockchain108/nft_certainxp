@@ -1,57 +1,30 @@
-// SPDX-License-Identifier: MIT
-
-// File: @openzeppelin/contracts/utils/Context.sol
+// "SPDX-License-Identifier: UNLICENSED"
 pragma solidity >=0.6.0 <0.8.0;
 
-/*
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with GSN meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
 abstract contract Context {
     function _msgSender() internal view virtual returns (address payable) {
         return msg.sender;
     }
 
     function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        this;
         return msg.data;
     }
 }
 
-// File: @openzeppelin/contracts/introspection/IERC165.sol
-
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
- * @dev Interface of the ERC165 standard, as defined in the
- * https://eips.ethereum.org/EIPS/eip-165[EIP].
- *
- * Implementers can declare support of contract interfaces, which can then be
- * queried by others ({ERC165Checker}).
- *
- * For an implementation, see {ERC165}.
+ * @dev Required interface of an ERC165 compliant contract.
  */
 interface IERC165 {
-    /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these ids are created.
-     *
-     * This function call must use less than 30 000 gas.
-     */
+/**
+ * @dev Required interface of an ERC165 compliant contract.
+ */
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
-// File: @openzeppelin/contracts/token/ERC721/IERC721.sol
 pragma solidity >=0.6.2 <0.8.0;
-
 
 /**
  * @dev Required interface of an ERC721 compliant contract.
@@ -1915,5 +1888,252 @@ library SafeERC20 {
             // solhint-disable-next-line max-line-length
             require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
         }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// File: contracts/uniswapv2/interfaces/IUniswapV2Router01.sol
+
+pragma solidity >=0.6.2;
+
+interface IUniswapV2Router01 {
+    function factory() external pure returns (address);
+    function WETH() external pure returns (address);
+
+    function addLiquidity(
+        address tokenA,
+        address tokenB,
+        uint amountADesired,
+        uint amountBDesired,
+        uint amountAMin,
+        uint amountBMin,
+        address to,
+        uint deadline
+    ) external returns (uint amountA, uint amountB, uint liquidity);
+    function addLiquidityETH(
+        address token,
+        uint amountTokenDesired,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline
+    ) external payable returns (uint amountToken, uint amountETH, uint liquidity);
+    function removeLiquidity(
+        address tokenA,
+        address tokenB,
+        uint liquidity,
+        uint amountAMin,
+        uint amountBMin,
+        address to,
+        uint deadline
+    ) external returns (uint amountA, uint amountB);
+    function removeLiquidityETH(
+        address token,
+        uint liquidity,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline
+    ) external returns (uint amountToken, uint amountETH);
+    function removeLiquidityWithPermit(
+        address tokenA,
+        address tokenB,
+        uint liquidity,
+        uint amountAMin,
+        uint amountBMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external returns (uint amountA, uint amountB);
+    function removeLiquidityETHWithPermit(
+        address token,
+        uint liquidity,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external returns (uint amountToken, uint amountETH);
+    function swapExactTokensForTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external returns (uint[] memory amounts);
+    function swapTokensForExactTokens(
+        uint amountOut,
+        uint amountInMax,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external returns (uint[] memory amounts);
+    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+        external
+        payable
+        returns (uint[] memory amounts);
+    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+        external
+        returns (uint[] memory amounts);
+    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+        external
+        returns (uint[] memory amounts);
+    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
+        external
+        payable
+        returns (uint[] memory amounts);
+
+    function quote(uint amountA, uint reserveA, uint reserveB) external pure returns (uint amountB);
+    function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) external pure returns (uint amountOut);
+    function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) external pure returns (uint amountIn);
+    function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts);
+    function getAmountsIn(uint amountOut, address[] calldata path) external view returns (uint[] memory amounts);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+contract ElementCrystals is ERC721 {
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
+    
+    IERC20 public usdcToken;
+    IERC20 public userTransferToken;
+
+    IUniswapV2Router01 public sushiSwap;
+
+    // Contract's token collection name
+    string public collectionName;
+
+    // Contract's Main receive coin for mint
+    address public tokenAddress;
+
+    // Contract's token symbol
+    string public collectionNameSymbol;
+
+    // Minted Nft Count
+    uint256 public elementCrystalCounter;
+
+    // Define NFT data struct
+    struct ElementCrystal {
+        uint256 tokenId;
+        string tokenName;
+        string tokenURI;
+        address payable mintedBy;
+        address payable currentOwner;
+        address payable previousOwner;
+        uint256 price;
+        uint256 numberOfTransfers;
+        bool forSale;
+    }
+
+    // map Elementcrystal's token id to scorpion finance
+    mapping(uint256 => ElementCrystal) public allElementCrystals;
+
+    // check if token name exists
+    mapping(string => bool) public tokenNameExists;
+
+    // check if token URI exists
+    mapping(string => bool) public tokenURIExists;
+
+    // Initialize contract while deployment with contract's collection name and token
+    constructor(address usdc, IUniswapV2Router01 _sushiswap) ERC721("ElementCrystal", "ElementCry") {
+        collectionName = name();
+        collectionNameSymbol = symbol();
+        usdcToken = IERC20(usdc);
+        tokenAddress = usdc;
+        sushiSwap = _sushiswap;
+    }
+
+    // Mint a new NFT
+    function mintElementCrystal(string calldata _name, string calldata _tokenURI, address _tokenAddress, uint256 __price ) external {
+
+        require(!tokenURIExists[_tokenURI]);
+        require(!tokenNameExists[_name]);
+
+        uint _price = __price.mul(1000000000000000000);
+        uint realUsdcAmount = 0;
+
+        if(tokenAddress == _tokenAddress) {
+            usdcToken.safeTransferFrom(msg.sender, address(this), _price);
+            realUsdcAmount = _price;
+        } else {
+
+            userTransferToken = IERC20(_tokenAddress);
+            uint256 walletAmount = userTransferToken.balanceOf(msg.sender);
+
+            require(walletAmount >= _price, "token amount is not enough");
+
+            userTransferToken.safeTransferFrom(msg.sender, address(this), _price);
+            userTransferToken.approve(address(sushiSwap), _price);
+
+            address[] memory addressSwap =  new address[](2);
+            addressSwap[0] = _tokenAddress;
+            addressSwap[1] = tokenAddress;
+
+            uint deadline = block.timestamp.add(86400);
+
+            uint[] memory amounts = sushiSwap.swapExactTokensForTokens(
+                _price, 0, addressSwap, address(this), deadline
+            );
+
+            realUsdcAmount = amounts[1];
+        }
+
+        elementCrystalCounter++;
+
+        _mint(msg.sender, elementCrystalCounter);
+        _setTokenURI(elementCrystalCounter, _tokenURI);
+
+        tokenURIExists[_tokenURI] = true;
+        tokenNameExists[_name] = true;
+
+        ElementCrystal memory newElementCrystal = ElementCrystal(
+            elementCrystalCounter,
+            _name,
+            _tokenURI,
+            msg.sender,
+            msg.sender,
+            address(0),
+            realUsdcAmount,
+            0,
+            true
+        );
+
+        allElementCrystals[elementCrystalCounter] = newElementCrystal;
     }
 }
