@@ -1,7 +1,6 @@
 import { ethers } from "hardhat";
 import chai from "chai";
 import { solidity } from "ethereum-waffle";
-import { TestToken__factory } from "../typechain";
 const { sushiSwapAddress } = require("../secrets.json");
 
 chai.use(solidity);
